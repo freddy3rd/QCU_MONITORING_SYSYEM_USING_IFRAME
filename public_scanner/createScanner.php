@@ -105,7 +105,9 @@
           document.getElementById("faculty").value = content.toString();
           document.getElementById("subbtn").click();
         }else{
-          scan_capture($("#facultyId").val())
+          setTimeout(() => {
+            scan_capture($("#facultyId").val())
+          }, 5000); //5s before capture
         }
 
         console.log("Scanner for '.$filename.'",);
