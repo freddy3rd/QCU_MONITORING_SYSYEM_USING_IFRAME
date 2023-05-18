@@ -11,6 +11,7 @@
 
     // import { timeInterval } from "../javascript/index.js"; 
 
+    let index = 0;
     const emailreport = (from, email, subject,room) => {
     var content = `Good Day QCUians! Were really sorry for the inconvenience that the system caused. 
       This message is to notify that the room ${room}  is having trouble with the camera. 
@@ -99,8 +100,13 @@
       
       scanner.addListener("scan", (content) => {
         // UICtrl.toTextBox(content.toString());
-        document.getElementById("faculty").value = content.toString();
-        document.getElementById("subbtn").click();
+        if(index === 0){
+          index++
+          document.getElementById("faculty").value = content.toString();
+          document.getElementById("subbtn").click();
+        }else{
+          scan_capture($("#facultyId").val())
+        }
 
         console.log("Scanner for '.$filename.'",);
       });
@@ -117,9 +123,8 @@
         }
       })
     }
+    
     _scanner(); 
- 
-
     $("#attendance").submit(function (e) {
       e.preventDefault();
       var attendance = $(this).serialize();
