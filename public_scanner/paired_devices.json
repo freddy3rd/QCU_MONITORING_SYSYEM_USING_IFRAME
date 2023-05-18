@@ -1,0 +1,14 @@
+[
+    {
+        "Room_name": "a400",
+        "device": "Scanner",
+        "deviceId": "1883098a50de8f00abb78b415d66a3fe670bfbde963312234eaa5df110151b61",
+        "label": "Integrated Camera (13d3:784b)"
+    },
+    {
+        "Room_name": "a401",
+        "device": "Monitoring",
+        "deviceId": "957ae42c360e6270e9e6da36bcfc663b78929419bbe4ef446f1ad4dd7693ceab",
+        "label": "HD WebCam (0bda:57f3)"
+    }
+]

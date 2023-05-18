@@ -1,0 +1,36 @@
+[
+    {
+        "facultyID": "FAC-000000011",
+        "subjectID": "21",
+        "date": "2023-05-18",
+        "section": "B",
+        "lecture_room": "a401",
+        "lec_start_time": "14:36:00",
+        "lec_end_time": "14:38:00",
+        "day": "Thursday",
+        "laboratory_room": "a400",
+        "lab_start_time": "11:50:00",
+        "lab_end_time": "11:51:00",
+        "faculty_qr": "0011",
+        "faculty_firstname": "John Michel",
+        "faculty_lastname": "Sarmiento",
+        "faculty_middlename": "Romero"
+    },
+    {
+        "facultyID": "FAC-000000023",
+        "subjectID": "21",
+        "date": "2023-05-18",
+        "section": "A",
+        "lecture_room": "a400",
+        "lec_start_time": "14:36:00",
+        "lec_end_time": "14:37:00",
+        "day": "Thursday",
+        "laboratory_room": "a401",
+        "lab_start_time": "16:40:00",
+        "lab_end_time": "11:51:00",
+        "faculty_qr": "3001",
+        "faculty_firstname": "Edward",
+        "faculty_lastname": "Pornelos",
+        "faculty_middlename": "Corbes"
+    }
+]
