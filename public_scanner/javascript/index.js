@@ -522,22 +522,7 @@ const UIController = (function (APICtrl) {
 const APPController = (function (APICtrl, UICtrl) {
   const DomCtrl = UICtrl.button();
   const DomInputs = UICtrl.inputField();
-  DomCtrl.sync_camera.addEventListener("click", async () => {
-    await APICtrl.getSchedule();
-
-    await APICtrl.getRooms();
-    //get Webcams Details
-    const webcams_info = await APICtrl.storeCamera_info();
-    //get Room Details
-    const rooms_detail = await APICtrl.fetch_rooms();
-    //pairedDevice and Rooms
-    const pairedDevice = await APICtrl.pairingDevice(
-      webcams_info,
-      rooms_detail
-    );
-    await APICtrl.store_pairedDevice(pairedDevice); //send info to fetchRoomList.php
- 
-  });
+  
 
   let index = 0;
   let targetTime = new Date();
@@ -834,64 +819,11 @@ const APPController = (function (APICtrl, UICtrl) {
       }
     }
 
-    // function scan_capture(facultyId){
-    //   const image =  UICtrl.scanner_generate_image(
-    //     facultyId,`#scanner_camera`
-    //   );
-
-    //   $.ajax({
-    //     url: "scanner_capture.php",
-    //     type: "POST",
-    //     data: {image:image,faculty: facultyId}
-    //   });
-    // }
-    // await APICtrl.sendAttendance();
-
-    // $("#attendance").submit(function (e) {
-    //   e.preventDefault();
-    //   var attendance = $(this).serialize();
-    //   const img_id = "scanner_image";
-    //   $.ajax({
-    //     type: "POST",
-    //     url: "attendance.php",
-    //     data: attendance,
-    //     dataType: "json",
-    //     success: function (response) {
-    //       console.log(response);
-    //       $("#facultyId").val(response.facultyId);
-
-    //       if (response.error) {
-    //         $(".alert").hide();
-    //         $(".alert-danger").show();
-    //         $(".message").html(response.message);
-    //       } else {
-    //         $(".alert").hide();
-    //         $(".alert-success").show();
-    //         $(".message").html(response.message);
-
-  
-           
-    //         setTimeout(() => {
-    //           scan_capture($("#facultyId").val())
-    //            $("#faculty").val("");
-    //         }, 5000); //5s before capture
-    //       }
-    //       setTimeout(() => {
-    //         $(".alert").hide();
-    //       }, 2000);
-    //     },
-    //     catch: (err) => {
-    //       console.log(err.message);
-    //     },
-    //   });
-    // });
-
-    // const sched_arr = await time_conversion();
 
     const sched = await sched_arr();
     let functionExecuted = false;
     let index = 0;
-    // var interval = 5 * 60 * 1000; //5min interval 
+    // var interval = 3 * 60 * 1000; //3min interval 
     var interval = "30000"; //30s timeInterval
     const imageData = [];
     
@@ -1000,8 +932,8 @@ const APPController = (function (APICtrl, UICtrl) {
              imageData.push(datas)
              if(!functionExecuted){
                functionExecuted = true; 
-               // setTimeout(capture_timer, 15 * 60 * 1000);//grace period
-               setTimeout(capture_timer, 1 * 60 * 1000);
+               // setTimeout(capture_timer, 10 * 60 * 1000);//grace period
+               setTimeout(capture_timer, 2 * 60 * 1000);
               // capture_timer()
              }
          })  
@@ -1032,7 +964,22 @@ const APPController = (function (APICtrl, UICtrl) {
       }
     });   
   };
-  
+  DomCtrl.sync_camera.addEventListener("click", async () => {
+    await APICtrl.getSchedule();
+
+    await APICtrl.getRooms();
+    //get Webcams Details
+    const webcams_info = await APICtrl.storeCamera_info();
+    //get Room Details
+    const rooms_detail = await APICtrl.fetch_rooms();
+    //pairedDevice and Rooms
+    const pairedDevice = await APICtrl.pairingDevice(
+      webcams_info,
+      rooms_detail
+    );
+    await APICtrl.store_pairedDevice(pairedDevice); //send info to fetchRoomList.php
+ 
+  });
   return {
     init() {
       fetch_rooms();

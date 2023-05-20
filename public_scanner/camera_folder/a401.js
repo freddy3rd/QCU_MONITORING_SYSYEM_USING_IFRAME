@@ -1,22 +1,6 @@
-<?php
 
-    $video = $_POST['video'];
-    $id = $_POST['deviceId'];
-    $faculy_id = $_POST['faculty_id'];
-    $filename = $_POST['filename'];
-    $faculty_qr = $_POST['faculty_qr'];
-    //javascript content
 
-    $js_file_content  = '
-
-    // import { timeInterval } from "../javascript/index.js";
-
-    const parentDoc = window.parent.document;
-    const alert_dialog_box = parentDoc.querySelector(".alert");
-    const danger_dialog_box = parentDoc.querySelector(".alert-danger");
-    const success_dialog_box = parentDoc.querySelector(".alert-success");
-    const danger_message = parentDoc.querySelector(".alert-danger .message") 
-    const success_message = parentDoc.querySelector(".alert-success .message") 
+    // import { timeInterval } from "../javascript/index.js"; 
     let index = 0;
 
     const emailreport = (from, email, subject,room) => {
@@ -69,7 +53,7 @@
       var canvas = document.createElement("canvas");
       let data_time = `${date_created}  :  ${time_created}`;
     
-      const video = document.querySelector("#'.$video.'");     
+      const video = document.querySelector("#scanner_camera");     
     
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
@@ -98,7 +82,7 @@
 
   
   const _scanner = async () =>{
-    let video = document.querySelector("#'.$video.'")
+    let video = document.querySelector("#scanner_camera")
     const scanner = new Instascan.Scanner({
         video: video,
         scanPeriod: 5,
@@ -111,28 +95,22 @@
           document.getElementById("faculty").value = content.toString();
           document.getElementById("subbtn").click();
         }else{
-          if (content ==="'.$faculty_qr.'"){
+          if (content==="0009"){
               setTimeout(() => {
                 scan_capture($("#facultyId").val())
               }, 5000); //5s before capture
           } else{
-            $(danger_dialog_box).show();
-            $(danger_message).text("Invalid Qr Please go to your designated room!");
-
-            setTimeout(() => {
-              $(danger_dialog_box).hide();
-            }, 5000); //5s before capture
-            
+          console.log("Invalid QrL Please go to your designated room!")
           }
       }
 
-        console.log("Scanner for '.$filename.'",index);
+        console.log("Scanner for a401",index);
       });
       const webcam = await Instascan.Camera.getCameras();
     
       webcam.forEach(async (cam) => {
         console.log(cam.id);
-        if (cam.id === "'.$id.'") {
+        if (cam.id === "957ae42c360e6270e9e6da36bcfc663b78929419bbe4ef446f1ad4dd7693ceab") {
           if (webcam.length > 0) {
             await scanner.start(cam);
           } else {
@@ -148,7 +126,7 @@
       var attendance = $(this).serialize();
       let room_qr =  document.getElementById("faculty").value
 
-      if(room_qr  === "'.$faculty_qr.'"){
+      if(room_qr  === "0009"){
             $.ajax({
               type: "POST",
               url: "../attendance.php",
@@ -157,20 +135,25 @@
               success: function (response) {
                 console.log(response)
                 if (response.error) {
-                  $(alert_dialog_box).hide();
-                  $(danger_dialog_box).show();
-                  $(danger_message).html(response.message);
+                  $(".alert").hide();
+                  $(".alert-danger").show();
+                  $(".message").html(response.message);
                 } else {
-                
-                  $(success_dialog_box).show();
-                  $(success_message).html(response.message);
+                  $(".alert").hide();
+                  $(".alert-success").show();
+                  $(".message").html(response.message);
 
-                  setTimeout(() => {
-                    $(alert_dialog_box).hide();
-                  }, 5000); //5s before capture
-
+                 
                   scan_capture($("#facultyId").val())
                   $("#faculty").val("");
+                
+                  // setTimeout(() => {
+                    
+                  //   // function stopInterval() {
+                  //   //   clearInterval(timeInterval);
+                  //   // }
+
+                  // }, 5000); //5s before capture
                 }
               
               },
@@ -179,21 +162,14 @@
               },
             });
           
-      }else{ 
-
-        $(danger_dialog_box).show();
-        $(danger_message).text("Invalid Qr Please go to your designated room!");
-        setTimeout(() => {
-          $(danger_dialog_box).hide();
-        }, 5000); //5s before capture
-  
-        return index = 0;
+      }else{ return index = 0;
+        console.log("Invalid QrL Please go to your designated room!")
       }
     });
  
 
     setInterval(()=>{
-        const videoStream = document.querySelector("#'.$video.'")
+        const videoStream = document.querySelector("#scanner_camera")
         var mediaStream = videoStream.srcObject
         if(mediaStream){
           mediaStream.oninactive = function() {
@@ -210,50 +186,9 @@
               //   clearInterval(timeInterval);
               // }
              //change emailreport 2nd parameter for email receiver
-            emailreport("QCUMS", "beni.creatives@gmail.com", "Error Report!","'.$filename.'")
+            emailreport("QCUMS", "beni.creatives@gmail.com", "Error Report!","a401")
           };
         }
   },1000)
-  
-
-    ';
-
-    $html_file_content = '<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-        <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" rel="nofollow"></script>
-        <script type="module" src="'.$filename.'.js" defer></script>
-    </head>
     
-    <body>
-        
-        <div class="position-relative" style="width:440px; height: 280px;">
-        <h3 class="fw-bold fs-3 position-absolute top-0 start-0 p-3 bg-body-tertiary">'.$filename.'</h3>
-        <video id="'.$video.'" class="w-100 h-100" autoplay></video>
-        </div>
-        <form id="attendance">
-        <select class="form-control mb-3" name="status" id="status">
-          <option value="in">Time In</option>
-        </select>
-        <div class="form-group mb-3" id="input_fields">
-          <input type="password" class="" id="faculty" name="faculty"  required>
-          <input type="hidden" id="qrCode" value="">
-          <input type="hidden" id="facultyId" value="'.$faculy_id.'">
-        </div>
-        <button type="submit" id="subbtn" class="btn fw-bold text-light" style="background: #DCCD60;"  name="signin"><i class="fa fa-sign-in"></i> Submit</button>
-        </form>
-    </body>
-    </html>';
     
-    file_put_contents('camera_folder/'.$filename.'.js',$js_file_content);
-    file_put_contents('camera_folder/'.$filename.'.html',$html_file_content);
-    
-?>
